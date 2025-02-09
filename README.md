@@ -1,129 +1,117 @@
-
-
 # cPanel Compromise Detection Plugin
 
-This cPanel plugin scans all cPanel accounts for signs of compromise by inspecting critical system files such as Apache logs, `.htaccess` files, SSH logs, and more. The plugin flags suspicious activity such as unauthorized SSH login attempts, suspicious PHP code, and modification of important files. It also offers the ability to send email alerts when suspicious activity is detected.
+This plugin scans all cPanel accounts on the server to detect potential signs of compromise. It checks Apache logs, `.htaccess` files, SSH logs, cron jobs, and other critical areas of the server for suspicious activity. When any potential compromise is detected, it logs the activity and sends an email notification to the administrator.
 
 ## Features
 
-- **Apache Log Scan**: Detects suspicious POST requests and use of `eval()` functions.
-- **Suspicious File Detection**: Checks `public_html` directories for compromised files, such as PHP files with `eval()` function.
-- **SSH Log Analysis**: Monitors failed SSH login attempts to detect brute-force attempts.
-- **Cron Jobs and .htaccess Monitoring**: Detects unauthorized modifications to cron jobs and `.htaccess` files.
-- **Email Alerts**: Sends email notifications if compromised accounts are detected.
-- **Comprehensive Logging**: Logs all detected suspicious activity for auditing and tracking purposes.
+- **Apache Log Scan**: Detect suspicious POST requests and `eval()` usage.
+- **Suspicious File Detection**: Look for compromised files in `public_html` directories.
+- **SSH Log Analysis**: Look for failed SSH login attempts.
+- **Cron Jobs and .htaccess Monitoring**: Detect unauthorized modifications.
+- **Email Alerts**: Receive email notifications when compromised accounts are detected.
+- **Logging**: View detailed logs for all detected activities.
 
 ## Installation
 
-### 1. Clone or Download the Repository
+### Prerequisites
 
-Clone the repository to your server or download it manually.
+- A **cPanel server** running on a supported version.
+- Root access to the server.
+- **cPanel & WHM** installed and configured.
+- **Postfix** or any other MTA configured for sending email notifications.
 
-```bash
-git clone https://github.com/iammaksudul/cpanel-compromise-detection-plugin.git
-cd cpanel-compromise-detection-plugin
-```
+### Steps to Install
 
-### 2. Run the Installation Script
+1. **Clone or Download the Repository:**
 
-Make the script executable and run it to install the plugin on your server.
+   Clone the repository or download it as a ZIP file:
 
-```bash
-chmod +x install.sh
-sudo ./install.sh
-```
+   ```bash
+   git clone https://github.com/your-username/cpanel-compromise-detection.git
+   ```
 
-This will install all necessary files in the cPanel plugin directory and set up the configuration.
+2. **Upload the Files to Your cPanel Plugin Directory:**
 
-### 3. Configure Email Alerts (Optional)
+   Navigate to the `/usr/local/cpanel/whostmgr/docroot/cgi/` directory and upload the files from the cloned repository.
 
-If you want to receive email notifications when suspicious activity is detected, make sure you configure the email address in the configuration file:
+3. **Run the `install.sh` Script:**
 
-1. Open `cpanel-compromise-detection.conf` in a text editor:
+   Make the script executable and run it:
 
-```bash
-nano /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/cpanel-compromise-detection.conf
-```
+   ```bash
+   sudo bash /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/install.sh
+   ```
 
-2. Set your email address:
+   This script installs the necessary files and sets up the plugin on the cPanel server.
 
-```bash
-PLUGIN_ENABLE_EMAIL_ALERTS="true"
-PLUGIN_ALERT_EMAIL="your-email@example.com"
-```
+4. **Verify Installation:**
 
-### 4. Running the Plugin
+   - After installation, log into WHM.
+   - You should now see the **Compromise Detection** plugin listed in the plugins section.
 
-The plugin can be triggered manually through the cPanel interface or by running the following command:
+5. **Setup Email Notifications:**
 
-```bash
-/usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/cpanel-compromise-detection.sh
-```
-
-This will scan all cPanel accounts on your server and log any suspicious activity.
-
-## Configuration
-
-The plugin includes an optional configuration file located at:
-
-```bash
-/usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/cpanel-compromise-detection.conf
-```
-
-You can customize the following settings:
-
-- **PLUGIN_ENABLE_EMAIL_ALERTS**: Set this to `true` if you want email notifications for detected compromises.
-- **PLUGIN_ALERT_EMAIL**: The email address that should receive the alerts.
-
-Example:
-
-```bash
-PLUGIN_ENABLE_EMAIL_ALERTS="true"
-PLUGIN_ALERT_EMAIL="admin@example.com"
-```
-
-## How the Scan Works
-
-The plugin checks several areas for potential compromise:
-
-1. **Apache Access Logs**: It checks for suspicious POST requests and `eval()` function usage.
-2. **Public HTML Directory**: It scans `public_html` for PHP files with suspicious code.
-3. **.htaccess File**: It checks for suspicious redirects and `php_value` entries in `.htaccess`.
-4. **SSH Logs**: It looks for failed login attempts in `/var/log/secure`.
-5. **Cron Jobs**: It monitors for unauthorized cron job entries.
-
-If any suspicious activity is detected, the plugin flags the account as potentially compromised.
-
-## Logs
-
-All detected activities are logged in:
-
-```bash
-/usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/compromise_detection.log
-```
-
-You can view the logs to track any suspicious activities detected by the plugin.
-
-## Uninstalling the Plugin
-
-To uninstall the plugin, run the following command:
-
-```bash
-sudo ./uninstall.sh
-```
-
-This will remove the plugin and all associated files from your server.
-
-## License
-
-This plugin is open-source and available under the **MIT License**. You are free to use, modify, and distribute it as needed.
-
-## Author
-
-This plugin was developed by **[Kh Maksudul Alam](https://www.maksudulalam.com/)**. For support or inquiries, you can reach out via the website.
+   Ensure that your cPanel server is configured to send email notifications to the administrator when a potential compromise is detected. Verify the email setup via **WHM > Exim Configuration Manager**.
 
 ---
 
-### Final Notes
+## Usage
 
-This README provides clear and detailed instructions on how to install, configure, and run your **cPanel Compromise Detection Plugin**. It also provides instructions on email alert configurations, logging, and scanning processes to ensure the security of cPanel servers.
+### Starting the Scan
+
+Once the plugin is installed and configured, you can run a scan through WHM:
+
+1. Log into **WHM**.
+2. Navigate to the **Compromise Detection** plugin.
+3. Click **Start Scan** to begin the scan for all cPanel accounts.
+
+The plugin will scan the Apache access logs, `.htaccess` files, SSH logs, cron jobs, and other critical server areas for suspicious activity. If a potential compromise is found, the system will log the details and send an email to the administrator.
+
+### Log Details
+
+The plugin maintains detailed logs for each detected activity. These logs can be accessed through the **Compromise Detection** plugin's UI in WHM. It provides an easy way to view the actions taken and identify accounts that need further attention.
+
+### Email Alerts
+
+You will receive an email notification if any suspicious activities are found. This includes detected issues like suspicious file modifications, unauthorized SSH login attempts, and changes in `.htaccess` files.
+
+---
+
+## Uninstallation
+
+To uninstall the plugin:
+
+1. Navigate to the plugin directory:
+   
+   ```bash
+   cd /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
+   ```
+
+2. Run the uninstallation script:
+
+   ```bash
+   sudo bash uninstall.sh
+   ```
+
+This will remove all the installed files and stop the plugin from running.
+
+---
+
+## Contributing
+
+If you'd like to contribute to the development of the **cPanel Compromise Detection Plugin**, feel free to fork the repository, make your changes, and submit a pull request. Your contributions are greatly appreciated!
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact
+
+For any questions or issues, feel free to reach out at **[dm@maksudulalam.com](mailto:dm@maksudulalam.com)**.
+
+---
+
