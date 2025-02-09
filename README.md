@@ -21,7 +21,7 @@ Clone the repository to your server or download it manually.
 
 ```bash
 git clone https://github.com/iammaksudul/cpanel-compromise-detection-plugin.git
-cd cpanel-compromise-detection
+cd cpanel-compromise-detection-plugin
 ```
 
 ### 2. Run the Installation Script
