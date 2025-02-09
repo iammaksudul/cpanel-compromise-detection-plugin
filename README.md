@@ -27,7 +27,7 @@ This plugin scans all cPanel accounts on the server to detect potential signs of
    Clone the repository or download it as a ZIP file:
 
    ```bash
-   git clone https://github.com/your-username/cpanel-compromise-detection.git
+   git clone https://github.com/iammaksudul/cpanel-compromise-detection-plugin.git
    ```
 
 2. **Upload the Files to Your cPanel Plugin Directory:**
