@@ -7,10 +7,9 @@ echo "Installing cPanel Compromise Detection Plugin..."
 # Create the plugin directory in the correct location
 mkdir -p /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
 
-# Ensure that you have the correct paths to your script files
-# Replace "/path/to/your/cpanel-compromise-detection.sh" with the actual path of your script
-cp /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/cpanel-compromise-detection.sh /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
-cp /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/index.html /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
+# Copy the correct script files from the current directory
+cp /root/cpanel-compromise-detection-plugin/cpanel-compromise-detection.sh /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
+cp /root/cpanel-compromise-detection-plugin/index.html /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
 
 # Create a cPanel configuration file for the plugin
 cat > /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/cpanel-compromise-detection.conf << EOF
