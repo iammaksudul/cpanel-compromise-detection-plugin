@@ -5,6 +5,6 @@
 echo "Uninstalling cPanel Compromise Detection Plugin..."
 
 # Remove plugin files and directories
-rm -rf /usr/local/cpanel/whostmgr/docroot/cgi/cpanel-compromise-detection/
+rm -rf cpanel-compromise-detection-plugin
 
 echo "Plugin uninstalled successfully."
